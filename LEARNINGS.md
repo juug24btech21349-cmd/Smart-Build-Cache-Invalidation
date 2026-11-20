@@ -141,14 +141,15 @@ To find the failure on GitHub:
 
 The failure is therefore identified in **Actions → failed CI run → build → Run tests**. If the test process cannot start, inspect the earlier install/setup step that is marked as failed instead.
 
-### 5. Screenshots to attach
+### 5. Screenshots and evidence
 
-For the submission, include screenshots from the actual Actions pages:
+The [passing CI run before the experiment (#1)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44798716379), the [intentional red run (#2)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44798849580), the [passing run after restoration (#3)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44799613874), and the [latest passing run (#5)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44799857685) are available in the repository's Actions history.
 
-- **Actions run list:** show both the red intentional-failure run and the passing run after the test was restored.
-- **Failed test log:** show the failed run's `build` job with **Run tests** expanded and the pytest assertion details visible.
+The red run's **Run tests** step reported `1 failed, 8 passed`; `tests/test_pricing.py:7` failed because the intentionally incorrect expected value was `91.0` while the function returned `90.0`. To locate it on GitHub, open **Actions → CI run #2 → build → Run tests**. Expand **Run tests** to view the pytest assertion. The screenshots below are captures of the actual run pages. The browser used for capture was not signed in, so GitHub shows its sign-in prompt instead of expanded logs; the failed **Run tests** step is visible, and the exact pytest error is recorded above.
 
-The [passing CI run before the experiment (#1)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44798716379), the [intentional red run (#2)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44798849580), and the [passing run after restoration (#3)](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44799613874) are available in the repository's Actions history. The red run's **Run tests** step reported `1 failed, 8 passed`; `tests/test_pricing.py:7` failed because the intentionally incorrect expected value was `91.0` while the function returned `90.0`. This is the pytest error to point out in the failed-test screenshot. Expand the `build` job and then **Run tests** to see the failing step. Do not use a mock image or a screenshot from another repository.
+![GitHub Actions passing run](screenshots/ci-passing-run.png)
+
+![GitHub Actions intentional failing run with the Run tests step marked red](screenshots/ci-failed-run.png)
 
 ### 6. Checkpoint
 
