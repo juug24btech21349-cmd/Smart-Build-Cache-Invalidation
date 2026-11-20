@@ -126,6 +126,8 @@ Push the workflow and open the repository's **Actions** tab. Select the latest *
 
 Temporarily change the expected result in a test—for example, change `assert apply_discount(100, 10) == 90.0` to `== 91.0`—then commit and push that temporary change. The workflow should fail because actual program behavior no longer matches the intentionally incorrect expectation. After confirming the failure and recording evidence, restore the correct expected value, commit, and push again. The final source tree should contain the passing assertion.
 
+This experiment was performed in this repository. The temporary incorrect assertion caused [CI run #2 to fail](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44798849580); the correct assertion has since been restored.
+
 ### 4. What a red run is for and where the error appears
 
 A red run is a controlled demonstration that CI detects a regression or a failed assertion. It gives the team evidence that the automated test gate is active; it is not a successful build and should not be mistaken for one. The example above makes the test expectation wrong on purpose—the production function is unchanged.
@@ -141,12 +143,12 @@ The failure is therefore identified in **Actions → failed CI run → build →
 
 ### 5. Screenshots to attach
 
-Attach screenshots from your own Actions run so the evidence corresponds to the account and run being submitted:
+For the submission, include screenshots from the actual Actions pages:
 
 - **Actions run list:** show both the red intentional-failure run and the passing run after the test was restored.
 - **Failed test log:** show the failed run's `build` job with **Run tests** expanded and the pytest assertion details visible.
 
-Capture the actual GitHub pages after completing the push experiment; do not use a mock image or a screenshot from another repository. The repository was empty when this document was prepared, so it had no pre-existing Actions runs or screenshots to attach.
+The red run is [CI run #2](https://github.com/juug24btech21349-cmd/Smart-Build-Cache-Invalidation/actions/runs/44798849580). Its **Run tests** step reported `1 failed, 8 passed`; `tests/test_pricing.py:7` failed because the intentionally incorrect expected value was `91.0` while the function returned `90.0`. This is the pytest error to point out in the failed-test screenshot. The Actions page can be viewed at the run link; expand the `build` job and then **Run tests** to see the failing step. Do not use a mock image or a screenshot from another repository.
 
 ### 6. Checkpoint
 
